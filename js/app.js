@@ -76,7 +76,7 @@ const bird = {
     w: 34,
     h: 26,
 
-    frame: 1,
+    frame: 0,
     draw: function () {
         let bird = this.animation[this.frame];
 
@@ -84,6 +84,21 @@ const bird = {
     },
 
     flap: function () {
+
+    },
+
+    update: function () {
+        //if the game state is in the game ready state.
+        this.preiod = state.current == state.getReady ? 10 : 5;
+
+        // increment the frema by 1 each preiods 
+
+        this.frame += frames % this.preiod == 0 ? 1 : 0;
+
+        //grames goes from 0 to 4 then again to 0
+
+        this.frame = this.frame % this.animation.length;
+
 
     },
 }
@@ -137,7 +152,7 @@ function draw() {
 
 // update 
 function update() {
-
+    bird.update();
 }
 
 // loop 
