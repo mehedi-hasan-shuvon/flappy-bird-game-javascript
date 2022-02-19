@@ -77,6 +77,11 @@ const bird = {
     h: 26,
 
     frame: 0,
+
+    gravity: 0.25,
+    jump: 4.6,
+    speed: 0,
+
     draw: function () {
         let bird = this.animation[this.frame];
 
@@ -84,6 +89,7 @@ const bird = {
     },
 
     flap: function () {
+        this.speed = -this.jump;
 
     },
 
@@ -98,6 +104,21 @@ const bird = {
         //grames goes from 0 to 4 then again to 0
 
         this.frame = this.frame % this.animation.length;
+
+        if (state.current == state.getReady) {
+            this.y = 150; // reset the position of the bird
+        } else {
+            this.speed += this.gravity;
+            this.y += this.speed;
+
+            if (this.y + this.h / 2 >= cvs.height - fg.h) {
+                this.y = cvs.height - fg.h - this.h / 2;
+                if (state.current == state.game) {
+                    state.current = state.over;
+                    // this.speed = 0;
+                }
+            }
+        }
 
 
     },
